@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<JUCERPROJECT id="qiwasR" name="YetAnotherAutoWah" projectType="audioplug"
+              useAppConfig="0" addUsingNamespaceToJuceHeader="0" jucerFormatVersion="1"
+              cppLanguageStandard="17" companyName="Radical Geeks" displaySplashScreen="1">
+  <MAINGROUP id="YPklBH" name="YetAnotherAutoWah">
+    <GROUP id="{983B0C9E-1FAD-C17F-FEE6-FCDB0F5AFFEC}" name="Source">
+      <FILE id="U6sakx" name="PluginProcessor.cpp" compile="1" resource="0"
+            file="Source/PluginProcessor.cpp"/>
+      <FILE id="Pdu9ef" name="PluginProcessor.h" compile="0" resource="0"
+            file="Source/PluginProcessor.h"/>
+      <FILE id="JxuuO8" name="PluginEditor.cpp" compile="1" resource="0"
+            file="Source/PluginEditor.cpp"/>
+      <FILE id="pNq9xI" name="PluginEditor.h" compile="0" resource="0" file="Source/PluginEditor.h"/>
+    </GROUP>
+  </MAINGROUP>
+  <JUCEOPTIONS JUCE_STRICT_REFCOUNTEDPOINTER="1" JUCE_VST3_CAN_REPLACE_VST2="0"/>
+  <EXPORTFORMATS>
+    <VS2022 targetFolder="Builds/VisualStudio2022">
+      <CONFIGURATIONS>
+        <CONFIGURATION isDebug="1" name="Debug" targetName="YetAnotherAutoWah"/>
+        <CONFIGURATION isDebug="0" name="Release" targetName="YetAnotherAutoWah"/>
+      </CONFIGURATIONS>
+      <MODULEPATHS>
+        <MODULEPATH id="juce_audio_basics" path="D:\Portable Software\JUCE\modules"/>
+        <MODULEPATH id="juce_audio_devices" path="D:\Portable Software\JUCE\modules"/>
+        <MODULEPATH id="juce_audio_formats" path="D:\Portable Software\JUCE\modules"/>
+        <MODULEPATH id="juce_audio_plugin_client" path="D:\Portable Software\JUCE\modules"/>
+        <MODULEPATH id="juce_audio_processors" path="D:\Portable Software\JUCE\modules"/>
+        <MODULEPATH id="juce_audio_utils" path="D:\Portable Software\JUCE\modules"/>
+        <MODULEPATH id="juce_core" path="D:\Portable Software\JUCE\modules"/>
+        <MODULEPATH id="juce_data_structures" path="D:\Portable Software\JUCE\modules"/>
+        <MODULEPATH id="juce_dsp" path="D:\Portable Software\JUCE\modules"/>
+        <MODULEPATH id="juce_events" path="D:\Portable Software\JUCE\modules"/>
+        <MODULEPATH id="juce_graphics" path="D:\Portable Software\JUCE\modules"/>
+        <MODULEPATH id="juce_gui_basics" path="D:\Portable Software\JUCE\modules"/>
+        <MODULEPATH id="juce_gui_extra" path="D:\Portable Software\JUCE\modules"/>
+      </MODULEPATHS>
+    </VS2022>
+  </EXPORTFORMATS>
+  <MODULES>
+    <MODULE id="juce_audio_basics" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_audio_devices" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_audio_formats" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_audio_plugin_client" showAllCode="1" useLocalCopy="0"
+            useGlobalPath="1"/>
+    <MODULE id="juce_audio_processors" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_audio_utils" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_core" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_data_structures" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_dsp" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_events" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_graphics" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_gui_basics" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_gui_extra" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+  </MODULES>
+  <LIVE_SETTINGS>
+    <OSX/>
+    <WINDOWS/>
+  </LIVE_SETTINGS>
+</JUCERPROJECT>
