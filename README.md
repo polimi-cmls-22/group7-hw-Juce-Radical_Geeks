@@ -13,7 +13,7 @@
     <img src="logo.png" alt="Logo" width="640" height="120">
   </a>
 
-<h3 align="center">FM Synth</h3>
+<h3 align="center">YetAnotherAutoWah</h3>
 
   <p align="center">
    AutoWahWah plugin
