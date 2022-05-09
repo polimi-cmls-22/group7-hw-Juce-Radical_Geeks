@@ -67,65 +67,55 @@
 <!-- GETTING STARTED -->
 ## Getting Started
 
+
 ### Prerequisites
 You have to download Juce.
 ### Installation
-
+For Mac users:
 1. Download for free Juce at [https://juce.com/get-juce]
-2. Install Juce
-3. Run the sclang script
-4. Experiment with the plugin and use it to create new sound!
-   
+2. Install xCode (or another IDE)
+3. Save and open the project in the IDE through the Projucer button
+4. Built the plugin in preferred version (i.e. stand-alone, vst3, component...)
+5. Insert the newly obtnained file in your favorited daw
+
+For Windows users: 
+1. Download for free Juce at [https://juce.com/get-juce]
+2. Install Visual Studio (or another IDE)
+3. Save and open the project in the IDE through the Projucer button
+4. Built the plugin in preferred version (i.e. stand-alone, vst3, component...)
+5. Insert the newly obtnained file in your favorited daw 
+
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
- 
-
-<!-- USAGE EXAMPLES -->
-## Usage
-
-<img src="screenshot.png" alt="Logo" width="700" height="350">
-
-The user can congifure the limits of the peak sweep with the two knobs on the first row.
-The user can control the sweep velocity with the knob on the first row.
+@@ -92,37 +100,28 @@ 
 The user can select the sweep function with the drop-down menu.
 The user can control the gain and the quality of the peak with two knobs on the last row.
 The user can use the plugin with the signal produced by an instrument or with an audio file in input to the plugin.
 
-The CSV file must have the following structure:
-The first four rows of the CSV file will control respectively the knobs of the four modulators in the following way:
-1.	the first value of the i-th row sets the ratio of the i-th modulator (values must be in the [0.1, 20] range with step=0.5). 
-2.	the second value of the i-th row sets the attack of the i-th modulator (values must be in the [0.001, 2] range with step=0.01). 
-3.	the third value of the i-th row sets the release of the i-th modulator (values must be in the [0.1, 10] range with step=0.01). 
-4.	the last value of the i-th row sets the index of the i-th modulator (values must be in the [0.1, 20] range with step=1). 
-		
-The fifth row will control the knobs of the carrier in the following way:
-1.	the first value sets the panning of the master output (values must be in the [-1, 1] range with step=0.1). 
-2.	the second value sets the master volume (values must be in the [0.001, 2] range with step=0.01).
-3.	the third value sets the master attack (values must be in the [0.001, 2] range with step=0.01). 
-4.	the last value sets the master release (values must be in the [0, 1] range). 
 
-The sixth row will control the algorithm of the FMSynth:
-1.	the first value (can be chosen between 0 and 1) determine whether the left path (modulators 1 and 3) will be active ('1') or not ('0').
-2.	the second value (can be chosen between 0 and 1) determine whether the right path (modulators 2 and 4) will be active ('1') or not ('0').
-3.	the third value (can be chosen between 0, 1 and 2) determine whether the modulator 3 is not active ('0') or its input comes from modulator 1 ('1') or from the carrier ('2').
-4.	the fourth value (can be chosen between 0, 1 and 2) determine whether the modulator 4 is not active ('0') or its input comes from modulator 2 ('1') or from the carrier ('2')	
-
-The only value of the last row will be used to select (between sine ('0'), triangle ('1') and sawtooth ('2')) the waveshape of the carrier.
+The plugin can be divided in three main parts, upper section, middle section, lower section.
+The upper section is composed by (from left to rigth) :
+1. the first knob sets the starting sweep frequency (values must be in the [0.5 Hz, 20kHz] range ). 
+2. the second knob sets the ending sweep frequency (values must be in the [0.5 Hz, 20kHz] range). 
+3. the third knob sets the velocity of the sweep function (values must be in the [0.5 Hz, 20kHz] range). 
+4. the drop-down menu where you can choose the type of signal. 
+  <img src="upper_section.png" alt="uppersection" width="700" height="350">
 
 
-Furthermore,  the user can create the FMSynth architecture that he likes the most. This can be done thanks to 4 buttons in the GUI: 
-1. 'Left path active / Left path active inactive': Activation of the left feed forward chain (enabling/disabling the modulator 3, directly connected to the carrier).
-2. 'Not active / Input from 1 / Feedback': Mode of operation of the left feed forward chain (choosing whether the input of the modulator 3 is no input or the output of modulator 1 or the carrier (feedback)).
-3. 'Right path active / Right path active inactive': Activation of the right feed forward chain (enabling/disabling the modulator 4, directly connected to the carrier).
-4. 'Not active / Input from 2 / Feedback': Mode of operation of the right feed forward chain (choosing whether the input of the modulator 4 is no input or the output of modulator 2 or the carrier (feedback)).
+The middle section contains the frequency analyzer.
+<img src="middle_section.jpeg" alt="middlesection" width="700" height="350">
 
-## Play demo
-Thanks to the 'Play demo / Stop demo' button the user can listen to a demo song created by the Team, in order to let him hear what sounds can be created via the FMSynth.
-DISCLAIMER: .
 
-## Real time scope and frequency scope
-.
+The lower section is composed by (from left to rigth) :
+1. the first knob(can be chosen between -24dB and 24dB) determine whether the peak gain of the filter.
+2. the second knob (can be chosen between 0.1dB and 10dB) determine the peak quality of the filter.
+3. the third knob (can be chosen between 0% and 100%) determine the wet/dry ratio.
+4. A botton to enable the visualization of the FFT of the input 
+
+<img src="lower_section.png" alt="lowersection" width="700" height="350">
+
+
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
