@@ -92,11 +92,12 @@ The upper section is composed by (from left to rigth) :
 2. the second knob sets the ending sweep frequency (values must be in the [0.5 Hz, 20kHz] range). 
 3. the third knob sets the velocity of the sweep function (values must be in the [0.5 Hz, 20kHz] range). 
 4. the drop-down menu where you can choose the type of signal. 
-  <img src="upper_section.jpg" alt="uppersection" width="700" height="350">
+  <img src="upper_section.jpg" alt="uppersection" width="600" height="200">
 
 
 The middle section contains the frequency analyzer.
-<img src="middle_section.jpg" alt="middlesection" width="700" height="350">
+
+<img src="middle_section.jpg" alt="middlesection" width="600" height="200">
 
 The lower section is composed by (from left to rigth) :
 1. the first knob(can be chosen between -24dB and 24dB) determine whether the peak gain of the filter.
@@ -104,7 +105,7 @@ The lower section is composed by (from left to rigth) :
 3. the third knob (can be chosen between 0% and 100%) determine the wet/dry ratio.
 4. A botton to enable the visualization of the FFT of the input 
 
-<img src="lower_section.jpg" alt="lowersection" width="700" height="350">
+<img src="lower_section.jpg" alt="lowersection" width="600" height="200">
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
