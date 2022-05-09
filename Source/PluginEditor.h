@@ -33,7 +33,7 @@ struct FFTDataGenerator
         auto* readIndex = audioData.getReadPointer(0);
         std::copy(readIndex, readIndex + fftSize, fftData.begin());
         
-        // first apply a windowing function to our data
+        // first apply a windowing function (in our case, Blackman) to our data
         window->multiplyWithWindowingTable (fftData.data(), fftSize);       // [1]
         
         // then render our FFT data..
@@ -45,7 +45,6 @@ struct FFTDataGenerator
         for( int i = 0; i < numBins; ++i )
         {
             auto v = fftData[i];
-//            fftData[i] /= (float) numBins;
             if( !std::isinf(v) && !std::isnan(v) )
             {
                 v /= float(numBins);
@@ -120,6 +119,7 @@ struct AnalyzerPathGenerator
 
         auto map = [bottom, top, negativeInfinity](float v)
         {
+            // Decibels of the FFT are between -infty and 0, map them to the limit positions of the area
             return juce::jmap(v,
                               negativeInfinity, 0.f,
                               float(bottom+10),   top);
@@ -127,19 +127,17 @@ struct AnalyzerPathGenerator
 
         auto y = map(renderData[0]);
 
-//        jassert( !std::isnan(y) && !std::isinf(y) );
         if( std::isnan(y) || std::isinf(y) )
             y = bottom;
         
         p.startNewSubPath(0, y);
 
-        const int pathResolution = 2; //you can draw line-to's every 'pathResolution' pixels.
+        // update path every 'pathResolution' pixels
+        const int pathResolution = 2; 
 
         for( int binNum = 1; binNum < numBins; binNum += pathResolution )
         {
             y = map(renderData[binNum]);
-
-//            jassert( !std::isnan(y) && !std::isinf(y) );
 
             if( !std::isnan(y) && !std::isinf(y) )
             {
@@ -175,7 +173,7 @@ struct LookAndFeel : juce::LookAndFeel_V4
                            float rotaryEndAngle,
                            juce::Slider&) override;
     
-    void drawToggleButton (juce::Graphics &g,
+    void drawToggleButton(juce::Graphics& g,
                            juce::ToggleButton & toggleButton,
                            bool shouldDrawButtonAsHighlighted,
                            bool shouldDrawButtonAsDown) override;
@@ -317,22 +315,18 @@ private:
     ResponseCurveComponent responseCurveComponent;
     
     using APVTS = juce::AudioProcessorValueTreeState;
-    using SliderAttachment = APVTS::SliderAttachment;
-    using ComboBoxAttachment = APVTS::ComboBoxAttachment;
     
-    SliderAttachment peakMinFreqSliderAttachment, peakMaxFreqSliderAttachment,
+    APVTS::SliderAttachment peakMinFreqSliderAttachment, peakMaxFreqSliderAttachment,
         peakGainSliderAttachment,
         peakQualitySliderAttachment, sweepFreqSliderAttachment, mixSliderAttachment;
 
-    ComboBoxAttachment comboBoxAttachment;
+    APVTS::ComboBoxAttachment comboBoxAttachment;
 
     std::vector<juce::Component*> getComps();
     
     PowerButton analyzerEnabledButton;
     
-    using ButtonAttachment = APVTS::ButtonAttachment;
-    
-    ButtonAttachment analyzerEnabledButtonAttachment;
+    APVTS::ButtonAttachment analyzerEnabledButtonAttachment;
     
     LookAndFeel lnf;
 

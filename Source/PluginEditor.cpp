@@ -23,12 +23,12 @@ void LookAndFeel::drawRotarySlider(juce::Graphics & g,
     
     auto bounds = Rectangle<float>(x, y, width, height);
     
-    auto enabled = slider.isEnabled();
-    
-    g.setColour(enabled ? Colours::grey : Colours::darkgrey );
+    // fill circle
+    g.setColour(Colours::grey);
     g.fillEllipse(bounds);
     
-    g.setColour(enabled ? Colours::darkred : Colours::grey);
+    // draw border of circle
+    g.setColour(Colours::darkred);
     g.drawEllipse(bounds, 1.f);
     
     if( auto* rswl = dynamic_cast<RotarySliderWithLabels*>(&slider))
@@ -46,23 +46,24 @@ void LookAndFeel::drawRotarySlider(juce::Graphics & g,
         
         jassert(rotaryStartAngle < rotaryEndAngle);
         
+        // map angle and value
         auto sliderAngRad = jmap(sliderPosProportional, 0.f, 1.f, rotaryStartAngle, rotaryEndAngle);
         
         p.applyTransform(AffineTransform().rotated(sliderAngRad, center.getX(), center.getY()));
         
         g.fillPath(p);
         
-        g.setFont(rswl->getTextHeight());
+        // draw rectangle, container of the text, and write the text
         auto text = rswl->getDisplayString();
         auto strWidth = g.getCurrentFont().getStringWidth(text);
-        
         r.setSize(strWidth + 4, rswl->getTextHeight() + 2);
         r.setCentre(bounds.getCentre());
-        
-        g.setColour(enabled ? Colours::black : Colours::darkgrey);
+
+        g.setColour(Colours::black);
         g.fillRect(r);
         
-        g.setColour(enabled ? Colours::lightgrey : Colours::white);
+        g.setFont(rswl->getTextHeight());
+        g.setColour(Colours::lightgrey);
         g.drawFittedText(text, r.toNearestInt(), juce::Justification::centred, 1);
     }
 }
@@ -74,36 +75,36 @@ void LookAndFeel::drawToggleButton(juce::Graphics &g,
 {
     using namespace juce;
     
-        Path powerButton;
-        
-        auto bounds = toggleButton.getLocalBounds();
-        
-        auto size = jmin(bounds.getWidth(), bounds.getHeight()) - 6;
-        auto r = bounds.withSizeKeepingCentre(size, size).toFloat();
-        
-        float ang = 30.f; //30.f;
-        
-        size -= 6;
-        
-        powerButton.addCentredArc(r.getCentreX(),
-                                  r.getCentreY(),
-                                  size * 0.5,
-                                  size * 0.5,
-                                  0.f,
-                                  degreesToRadians(ang),
-                                  degreesToRadians(360.f - ang),
-                                  true);
-        
-        powerButton.startNewSubPath(r.getCentreX(), r.getY());
-        powerButton.lineTo(r.getCentre());
-        
-        PathStrokeType pst(2.f, PathStrokeType::JointStyle::curved);
-        
-        auto color = toggleButton.getToggleState() ? Colours::dimgrey : Colours::yellow;
-        
-        g.setColour(color);
-        g.strokePath(powerButton, pst);
-        g.drawEllipse(r, 2);
+    Path powerButton;
+    
+    auto bounds = toggleButton.getLocalBounds();
+    
+    auto size = jmin(bounds.getWidth(), bounds.getHeight()) - 6;
+    auto r = bounds.withSizeKeepingCentre(size, size).toFloat();
+    
+    float ang = 30.f; //30.f;
+    
+    size -= 6;
+    
+    powerButton.addCentredArc(r.getCentreX(),
+                              r.getCentreY(),
+                              size * 0.5,
+                              size * 0.5,
+                              0.f,
+                              degreesToRadians(ang),
+                              degreesToRadians(360.f - ang),
+                              true);
+    
+    powerButton.startNewSubPath(r.getCentreX(), r.getY());
+    powerButton.lineTo(r.getCentre());
+    
+    PathStrokeType pst(2.f, PathStrokeType::JointStyle::curved);
+    
+    auto color = toggleButton.getToggleState() ? Colours::dimgrey : Colours::yellow;
+    
+    g.setColour(color);
+    g.strokePath(powerButton, pst);
+    g.drawEllipse(r, 2);
 }
 //==============================================================================
 void RotarySliderWithLabels::paint(juce::Graphics &g)
@@ -118,12 +119,12 @@ void RotarySliderWithLabels::paint(juce::Graphics &g)
     auto sliderBounds = getSliderBounds();
     
     auto bounds = getLocalBounds();
-        
-        g.setColour(Colours::black);
-        g.drawFittedText(getName(),
-                         bounds.removeFromTop(getTextHeight()+2),
-                         Justification::centredBottom,
-                         1);
+    
+    g.setColour(Colours::black);
+    g.drawFittedText(getName(),
+                     bounds.removeFromTop(getTextHeight()+2),
+                     Justification::centredBottom,
+                     1);
     
     getLookAndFeel().drawRotarySlider(g,
                                       sliderBounds.getX(),
@@ -148,6 +149,7 @@ void RotarySliderWithLabels::paint(juce::Graphics &g)
         jassert(0.f <= pos);
         jassert(pos <= 1.f);
         
+        // map position as angle and position as uniform value
         auto ang = jmap(pos, 0.f, 1.f, startAng, endAng);
         
         auto c = center.getPointOnCircumference(radius + getTextHeight() * 0.5f + 1, ang);
@@ -158,6 +160,7 @@ void RotarySliderWithLabels::paint(juce::Graphics &g)
         r.setCentre(c);
         r.setY(r.getY() + getTextHeight());
         
+        // draw the text of the labels
         g.drawFittedText(str, r.toNearestInt(), juce::Justification::centred, 1);
     }
     
@@ -178,7 +181,6 @@ juce::Rectangle<int> RotarySliderWithLabels::getSliderBounds() const
     r.setY(bounds.getY());
     
     return r;
-    
 }
 
 juce::String RotarySliderWithLabels::getDisplayString() const
@@ -193,6 +195,7 @@ juce::String RotarySliderWithLabels::getDisplayString() const
     {
         float val = getValue();
         
+        // if val < 1000 Hz, use Hertz, else use Kilo Hertz
         if( val > 999.f )
         {
             val /= 1000.f; //1001 / 1000 = 1.001
@@ -231,6 +234,7 @@ rightPathProducer(audioProcessor.rightChannelFifo)
 
     updateChain();
     
+    // refresh rate: 60 Hz
     startTimerHz(60);
 }
 
@@ -246,8 +250,8 @@ ResponseCurveComponent::~ResponseCurveComponent()
 void ResponseCurveComponent::updateResponseCurve()
 {
     using namespace juce;
+
     auto responseArea = getAnalysisArea();
-    
     auto w = responseArea.getWidth();
     
     auto& peak = monoChain.get<ChainPositions::Peak>();
@@ -255,16 +259,19 @@ void ResponseCurveComponent::updateResponseCurve()
     auto sampleRate = audioProcessor.getSampleRate();
     
     std::vector<double> mags;
-    
+    // set the size of mags equal to w elements
     mags.resize(w);
     
     for( int i = 0; i < w; ++i )
     {
         double mag = 1.f;
+        // frequency is shown as a logarithmic scale
         auto freq = mapToLog10(double(i) / double(w), 20.0, 20000.0);
         
+        // get magnitude of frequency response for the current value of frequency
         mag *= peak.coefficients->getMagnitudeForFrequency(freq, sampleRate);
-            
+        
+        // convert magnitude to Decibels
         mags[i] = Decibels::gainToDecibels(mag);
     }
     
@@ -274,9 +281,11 @@ void ResponseCurveComponent::updateResponseCurve()
     const double outputMax = responseArea.getY();
     auto map = [outputMin, outputMax](double input)
     {
+        // the gain is btw -24 dB and 24 dB, so map it btw min position and max position of the area
         return jmap(input, -24.0, 24.0, outputMin, outputMax);
     };
     
+    // we have the values of the magnitude in the mags vector, let's draw a line that follows the values
     responseCurve.startNewSubPath(responseArea.getX(), map(mags.front()));
     
     for( size_t i = 1; i < mags.size(); ++i )
@@ -305,15 +314,18 @@ void ResponseCurveComponent::paint (juce::Graphics& g)
     auto minFreq = chainSettings.peakMinFreq;
     auto maxFreq = chainSettings.peakMaxFreq;
 
+    // convert sweep freq to decade scale
     auto normMinFreq = juce::mapFromLog10(minFreq, 20.f, 20000.f);
     auto normMaxFreq = juce::mapFromLog10(maxFreq, 20.f, 20000.f);
 
     auto xMinFreq = left + width * normMinFreq;
     auto xMaxFreq = left + width * normMaxFreq;
 
+    // draw the line of min sweep freq
     g.setColour(Colours::red);
     g.drawVerticalLine(xMinFreq, top, bottom);
 
+    // draw the line of max sweep freq
     g.setColour(Colours::green);
     g.drawVerticalLine(xMaxFreq, top, bottom);
     
@@ -321,16 +333,17 @@ void ResponseCurveComponent::paint (juce::Graphics& g)
     
     if( shouldShowFFTAnalysis )
     {
+        // FFT is stereo so we have a color for left and another for right
         auto leftChannelFFTPath = leftPathProducer.getPath();
         leftChannelFFTPath.applyTransform(AffineTransform().translation(responseArea.getX(), responseArea.getY()));
         
-        g.setColour(Colours::blue); //blue
+        g.setColour(Colours::blue);
         g.strokePath(leftChannelFFTPath, PathStrokeType(1.f));
         
         auto rightChannelFFTPath = rightPathProducer.getPath();
         rightChannelFFTPath.applyTransform(AffineTransform().translation(responseArea.getX(), responseArea.getY()));
         
-        g.setColour(Colours::yellow); //yellow
+        g.setColour(Colours::yellow);
         g.strokePath(rightChannelFFTPath, PathStrokeType(1.f));
     }
     
@@ -358,6 +371,7 @@ std::vector<float> ResponseCurveComponent::getFrequencies()
 {
     return std::vector<float>
     {
+        // frequencies in decades
         20, 50, 100,
         200, 500, 1000,
         2000, 5000, 10000,
@@ -369,6 +383,7 @@ std::vector<float> ResponseCurveComponent::getGains()
 {
     return std::vector<float>
     {
+        // Decibels
         -24, -12, 0, 12, 24
     };
 }
@@ -378,6 +393,7 @@ std::vector<float> ResponseCurveComponent::getXs(const std::vector<float> &freqs
     std::vector<float> xs;
     for( auto f : freqs )
     {
+        // get decade scale for the frequency
         auto normX = juce::mapFromLog10(f, 20.f, 20000.f);
         xs.push_back( left + width * normX );
     }
@@ -402,6 +418,7 @@ void ResponseCurveComponent::drawBackgroundGrid(juce::Graphics &g)
     g.setColour(Colours::black);
     for( auto x : xs )
     {
+        // draw the decade scale for frequency
         g.drawVerticalLine(x, top, bottom);
     }
     
@@ -409,6 +426,7 @@ void ResponseCurveComponent::drawBackgroundGrid(juce::Graphics &g)
     
     for( auto gDb : gain )
     {
+        // draw the dB scale for magnitude
         auto y = jmap(gDb, -24.f, 24.f, float(bottom), float(top));
         
         g.setColour(gDb == 0.f ? Colours::black : Colours::black );
@@ -446,6 +464,7 @@ void ResponseCurveComponent::drawTextLabels(juce::Graphics &g)
             f /= 1000.f;
         }
 
+        // Hz or kHz
         str << f;
         if( addK )
             str << "k";
@@ -468,6 +487,7 @@ void ResponseCurveComponent::drawTextLabels(juce::Graphics &g)
     {
         auto y = jmap(gDb, -24.f, 24.f, float(bottom), float(top));
         
+        // positive or negative
         String str;
         if( gDb > 0 )
             str << "+";
@@ -558,6 +578,7 @@ void ResponseCurveComponent::timerCallback()
         rightPathProducer.process(fftBounds, sampleRate);
     }
 
+    // update chain and response curve everytime this callback is called (60 Hz)
     updateChain();
     updateResponseCurve();
     
@@ -595,6 +616,8 @@ juce::Rectangle<int> ResponseCurveComponent::getAnalysisArea()
 //==============================================================================
 YetAnotherAutoWahAudioProcessorEditor::YetAnotherAutoWahAudioProcessorEditor (YetAnotherAutoWahAudioProcessor& p)
     : AudioProcessorEditor (&p), audioProcessor (p),
+
+// associating the parameters to the sliders, setting the unit of measurement and the title of the slider
 peakMinFreqSlider(*audioProcessor.apvts.getParameter("Sweep Min Freq"), "Hz", "Sweep Min Freq"),
 peakMaxFreqSlider(*audioProcessor.apvts.getParameter("Sweep Max Freq"), "Hz", "Sweep Max Freq"),
 peakGainSlider(*audioProcessor.apvts.getParameter("Peak Gain"), "dB", "Peak Gain"),
@@ -604,6 +627,7 @@ mixSlider(*audioProcessor.apvts.getParameter("Mix"), "%", "Mix"),
 
 responseCurveComponent(audioProcessor),
 
+// associating the labels
 peakMinFreqSliderAttachment(audioProcessor.apvts, "Sweep Min Freq", peakMinFreqSlider),
 peakMaxFreqSliderAttachment(audioProcessor.apvts, "Sweep Max Freq", peakMaxFreqSlider),
 peakGainSliderAttachment(audioProcessor.apvts, "Peak Gain", peakGainSlider),
@@ -611,10 +635,12 @@ peakQualitySliderAttachment(audioProcessor.apvts, "Peak Quality", peakQualitySli
 sweepFreqSliderAttachment(audioProcessor.apvts, "Sweep Freq", sweepFreqSlider),
 mixSliderAttachment(audioProcessor.apvts, "Mix", mixSlider),
 
+// button to toggle FFT of the input
 analyzerEnabledButtonAttachment(audioProcessor.apvts, "Analyzer Enabled", analyzerEnabledButton),
 
 comboBoxAttachment(audioProcessor.apvts, "Sweep Type", comboBox)
 {
+    // setting the labels
     peakMinFreqSlider.labels.add({ 0.f, "0.5Hz" });
     peakMinFreqSlider.labels.add({ 1.f, "20kHz" });
 
@@ -633,13 +659,15 @@ comboBoxAttachment(audioProcessor.apvts, "Sweep Type", comboBox)
     mixSlider.labels.add({ 0.f, "0%" });
     mixSlider.labels.add({ 1.f, "100%" });
     
+    // show all the components
     for( auto* comp : getComps() )
     {
         addAndMakeVisible(comp);
     }
 
     analyzerEnabledButton.setLookAndFeel(&lnf);
-    
+
+    // click listener for the button
     auto safePtr = juce::Component::SafePointer<YetAnotherAutoWahAudioProcessorEditor>(this);
 
     analyzerEnabledButton.onClick = [safePtr]()
@@ -653,7 +681,9 @@ comboBoxAttachment(audioProcessor.apvts, "Sweep Type", comboBox)
 
     peakMinFreqSlider.onValueChange = [this]()
     {
-        peakMaxFreqSlider.setRange(peakMinFreqSlider.getValue(), 20000.f);
+        // the max sweep freq shouldn't go below the min sweep freq
+        // so, if the min sweep freq increases and surpasses the max sweep freq, set the max sweep freq to the minimum valid value
+        peakMaxFreqSlider.setRange(peakMinFreqSlider.getValue() - std::numeric_limits<float>::epsilon(), 20000.f);
     };
     
 	// Make sure that before the constructor has finished, you've set the
@@ -669,54 +699,9 @@ YetAnotherAutoWahAudioProcessorEditor::~YetAnotherAutoWahAudioProcessorEditor()
 //==============================================================================
 void YetAnotherAutoWahAudioProcessorEditor::paint(juce::Graphics &g)
 {
-    /*
     using namespace juce;
-    
-    g.fillAll (Colours::black);
-    
-    Path curve;
-    
-    auto bounds = getLocalBounds();
-    auto center = bounds.getCentre();
-    
-    g.setFont(Font("Iosevka Term Slab", 30, 0)); //https://github.com/be5invis/Iosevka
-    
-    String title { "YetAnotherAutoWah" };
-    g.setFont(30);
-    auto titleWidth = g.getCurrentFont().getStringWidth(title);
-    
-    curve.startNewSubPath(center.x, 32);
-    curve.lineTo(center.x - titleWidth * 0.45f, 32);
-    
-    auto cornerSize = 20;
-    auto curvePos = curve.getCurrentPosition();
-    curve.quadraticTo(curvePos.getX() - cornerSize, curvePos.getY(),
-                      curvePos.getX() - cornerSize, curvePos.getY() - 16);
-    curvePos = curve.getCurrentPosition();
-    curve.quadraticTo(curvePos.getX(), 2,
-                      curvePos.getX() - cornerSize, 2);
-    
-    curve.lineTo({0.f, 2.f});
-    curve.lineTo(0.f, 0.f);
-    curve.lineTo(center.x, 0.f);
-    curve.closeSubPath();
-    
-    g.setColour(Colours::blue);
-    g.fillPath(curve);
-    
-    curve.applyTransform(AffineTransform().scaled(-1, 1));
-    curve.applyTransform(AffineTransform().translated(getWidth(), 0));
-    g.fillPath(curve);
-    
-    g.setColour(Colour(239u, 255u, 0u));
-    g.drawFittedText(title, bounds, juce::Justification::centredTop, 1);
-    
-    g.setColour(Colours::black);
-    g.setFont(14);
-    g.drawFittedText("Peak", peakQualitySlider.getBounds(), juce::Justification::centredBottom, 1);
-    */
 
-    using namespace juce;
+    // drawing the rectangles to delimit the knobs
 
     g.fillAll(Colours::lightgrey);
 
@@ -745,7 +730,6 @@ void YetAnotherAutoWahAudioProcessorEditor::paint(juce::Graphics &g)
     curve.applyTransform(AffineTransform().translated(getWidth(), 0));
     g.fillPath(curve);
 
-
     g.setColour(Colours::black);
     g.setFont(14);
 
@@ -755,51 +739,21 @@ void YetAnotherAutoWahAudioProcessorEditor::paint(juce::Graphics &g)
     g.setColour(Colours::darkred);
     g.drawRoundedRectangle(sweepArea, 5.0f, 3.0f);
     g.drawRoundedRectangle(peakArea, 5.0f, 3.0f);
+    
+    // draw the title of the toggle button
+    g.setColour(Colours::black);
+    g.drawFittedText("Show FFT", 365, 365, 100, 18, juce::Justification::centred, 1);
+    g.drawFittedText("of input", 365, 380, 100, 18, juce::Justification::centred, 1);
 }
 
 void YetAnotherAutoWahAudioProcessorEditor::resized()
 {
 	// This is generally where you'll want to lay out the positions of any
     // subcomponents in your editor..
-	
-    /*
-    auto bounds = getLocalBounds();
-    bounds.removeFromTop(4);
-    
-    auto analyzerEnabledArea = bounds.removeFromTop(25);
-    
-    analyzerEnabledArea.setWidth(50);
-    analyzerEnabledArea.setX(5);
-    analyzerEnabledArea.removeFromTop(2);
-    
-    bounds.removeFromTop(5);
-    
-    float hRatio = 25.f / 100.f; //JUCE_LIVE_CONSTANT(25) / 100.f;
-    auto responseArea = bounds.removeFromTop(bounds.getHeight() * hRatio);
-
-    responseCurveComponent.setBounds(responseArea);
-    
-    bounds.removeFromTop(5);
-
-    auto leftArea = bounds.removeFromLeft(bounds.getWidth() * 0.33);
-    auto rightArea = bounds.removeFromRight(bounds.getWidth() * 0.5);
-    
-    analyzerEnabledButton.setBounds(bounds.removeFromTop(25));
-    peakMinFreqSlider.setBounds(leftArea.removeFromTop(leftArea.getHeight() * 0.33));
-    peakMaxFreqSlider.setBounds(leftArea.removeFromTop(leftArea.getHeight() * 0.5));
-    sweepFreqSlider.setBounds(rightArea.removeFromTop(rightArea.getHeight() * 0.33));
-    mixSlider.setBounds(rightArea.removeFromTop(rightArea.getHeight() * 0.5));
-    peakGainSlider.setBounds(bounds.removeFromTop(bounds.getHeight() * 0.5));
-    peakQualitySlider.setBounds(bounds);
-
-    comboBox.addItemList(audioProcessor.apvts.getParameter("Sweep Type")->getAllValueStrings(), 1);
-    comboBox.setBounds(rightArea.removeFromTop(rightArea.getHeight() * 0.66));
-    */
 
     auto bounds = getLocalBounds().reduced(5);
     bounds.removeFromTop(8);
-    //   float hRatio = 25.f / 100.f; //JUCE_LIVE_CONSTANT(25) / 100.f;
-    //   auto responseArea = bounds.removeFromTop(bounds.getHeight() * hRatio); //change from 0.33 to 0.25 because I needed peak hz text to not overlap the slider thumb
+    bounds.removeFromLeft(8);
 
     auto height = bounds.getHeight();
     auto width = bounds.getWidth();
@@ -820,17 +774,24 @@ void YetAnotherAutoWahAudioProcessorEditor::resized()
     peakGainSlider.setBounds(peakArea.removeFromLeft(widthPeak * 0.25));
     peakQualitySlider.setBounds(peakArea.removeFromLeft(widthPeak * 0.25));
     mixSlider.setBounds(peakArea.removeFromLeft(widthPeak * 0.25));
+
     auto peakAreaButton = peakArea.removeFromTop(heightPeak * 0.70);
-    auto peakAreaButton2 = peakAreaButton.removeFromBottom(heightPeak * 0.45);
-    auto peakAreaButton3 = peakAreaButton2.removeFromLeft(widthPeak * 0.40);
-    auto peakAreaButton4 = peakAreaButton3.removeFromRight(widthPeak * 0.40);
+    auto peakAreaButton2 = peakAreaButton.removeFromBottom(heightPeak * 0.35);
+    auto peakAreaButton3 = peakAreaButton2.removeFromLeft(widthPeak * 0.30);
+    auto peakAreaButton4 = peakAreaButton3.removeFromRight(widthPeak * 0.30);
+
     analyzerEnabledButton.setBounds(peakAreaButton4);
 
+    // filling the drop down menu with all the options
     comboBox.addItemList(audioProcessor.apvts.getParameter("Sweep Type")->getAllValueStrings(), 1);
+
     auto sweepTypeArea = sweepArea.removeFromTop(heightSweep * 0.65);
     auto sweepTypeArea2 = sweepTypeArea.removeFromBottom(sweepTypeArea.getHeight() * 0.65);
     auto sweepTypeArea3 = sweepTypeArea2.removeFromLeft(sweepTypeArea2.getWidth() * 0.80);
+
     comboBox.setBounds(sweepTypeArea3);
+
+    comboBox.setSelectedId(1);
 }
 
 std::vector<juce::Component*> YetAnotherAutoWahAudioProcessorEditor::getComps()

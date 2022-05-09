@@ -17,8 +17,6 @@ struct Fifo
 {
     void prepare(int numChannels, int numSamples)
     {
-//        static_assert( std::is_same_v<T, juce::AudioBuffer<float>>,
-//                      "prepare(numChannels, numSamples) should only be used when the Fifo is holding juce::AudioBuffer<float>");
         for( auto& buffer : buffers)
         {
             buffer.setSize(numChannels,
@@ -32,8 +30,6 @@ struct Fifo
     
     void prepare(size_t numElements)
     {
-//        static_assert( std::is_same_v<T, std::vector<float>>,
-//                      "prepare(numElements) should only be used when the Fifo is holding std::vector<float>");
         for( auto& buffer : buffers )
         {
             buffer.clear();
@@ -230,13 +226,13 @@ private:
 	juce::HeapBlock<char> tempBufferMemoryLeft, tempBufferMemoryRight;
     juce::dsp::AudioBlock<float> tempBufferLeft, tempBufferRight;
     
+    // functions that will be used for the peak filter
     void updatePeakFilter(const ChainSettings& chainSettings);
     void updateFilters();
     
     // variables and functions that will be used for central frequency sweep
 	float sweepFunction(float phase);
     double phase;
-    const double PI = std::atan(1.0) * 4;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (YetAnotherAutoWahAudioProcessor)

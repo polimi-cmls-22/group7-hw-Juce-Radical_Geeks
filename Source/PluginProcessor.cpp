@@ -114,11 +114,10 @@ void YetAnotherAutoWahAudioProcessor::prepareToPlay (double sampleRate, int samp
     leftChannelFifo.prepare(samplesPerBlock);
     rightChannelFifo.prepare(samplesPerBlock);
 
-    //******************************************************************************
-    // Initialize variables
+    // phase of the sweep function
     phase = 0.0;
-    //******************************************************************************
 
+    // buffer for sound processing
     tempBufferLeft = juce::dsp::AudioBlock<float>(tempBufferMemoryLeft, spec.numChannels, spec.maximumBlockSize);
     tempBufferRight = juce::dsp::AudioBlock<float>(tempBufferMemoryRight, spec.numChannels, spec.maximumBlockSize);
 }
@@ -140,26 +139,29 @@ float YetAnotherAutoWahAudioProcessor::sweepFunction(float phase)
 
     // TRIANGLE
     if (sweepType == 1) {
-        if (phase < PI)
-            return 2 * phase / PI - 1;
+        if (phase < juce::MathConstants<float>::pi)
+            return 2 * phase / juce::MathConstants<float>::pi - 1;
         else
-            return 3 - 2 * phase / PI;
+            return 3 - 2 * phase / juce::MathConstants<float>::pi;
     }
     
     // SAWTOOTH
     if(sweepType == 2)
-        return 1 - phase / PI;
+        return 1 - phase / juce::MathConstants<float>::pi;
 
     // INVERTED SAWTOOTH
     if (sweepType == 3)
-        return phase / PI - 1;
+        return phase / juce::MathConstants<float>::pi - 1;
 
     // RECTANGLE
-    if (sweepType == 4)
-        if (phase < PI)
+    if (sweepType == 4) {
+        if (phase < juce::MathConstants<float>::pi) {
             return 1;
-        else
+        }
+        else {
             return -1;
+        }
+    }
     
     return 0;
 }
@@ -173,8 +175,8 @@ bool YetAnotherAutoWahAudioProcessor::isBusesLayoutSupported (const BusesLayout&
     juce::ignoreUnused (layouts);
     return true;
   #else
-    // This is the place where you check if the layout is supported.
-    // We only support stereo.
+    // This is the place where you check if the layout is supported
+    // We only support stereo
     if (layouts.getMainOutputChannelSet() != juce::AudioChannelSet::stereo())
         return false;
 
@@ -265,8 +267,8 @@ void YetAnotherAutoWahAudioProcessor::processBlock (juce::AudioBuffer<float>& bu
             // updating phase modulo 2PI
             phase += 1/sr * sweepFreq;
 
-            if (phase > 2 * PI)
-                phase -= 2 * PI;
+            if (phase > juce::MathConstants<float>::twoPi)
+                phase -= juce::MathConstants<float>::twoPi;
 
             // updating peak center frequency
             apvts.getRawParameterValue("Peak Freq")->store(fc);
@@ -357,6 +359,8 @@ juce::AudioProcessorValueTreeState::ParameterLayout YetAnotherAutoWahAudioProces
 {
     juce::AudioProcessorValueTreeState::ParameterLayout layout;
     
+    // add parameters to the layout
+
     layout.add(std::make_unique<juce::AudioParameterFloat>("Peak Freq",
         "Peak Freq",
         juce::NormalisableRange<float>(20.f, 20000.f, 1.f, 0.25f),
@@ -395,6 +399,7 @@ juce::AudioProcessorValueTreeState::ParameterLayout YetAnotherAutoWahAudioProces
         "Mix",
         juce::NormalisableRange<float>(0.f, 100.f, 5.f),
         100.f));
+
    return layout;
 }
 
