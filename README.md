@@ -21,7 +21,7 @@
     <a href="https://github.com/polimi-cmls-22/group7-HW-SC-Radical_Geeks"><strong>Explore the docs»</strong></a>
     <br />
     <br />
-    <a href="https://github.com/polimi-cmls-22/group7-HW-SC-Radical_Geeks">View Demo</a>
+ 
   </p>
 </div>
 
@@ -81,6 +81,9 @@ For Windows users:
 5. Insert the newly obtnained file in your favorited daw 
 
 <p align="right">(<a href="#top">back to top</a>)</p>
+
+<!-- USAGE -->
+## Usage
 
 The user can select the sweep function with the drop-down menu.
 The user can control the gain and the quality of the peak with two knobs on the last row.
