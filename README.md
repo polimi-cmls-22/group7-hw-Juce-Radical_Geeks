@@ -1,4 +1,3 @@
-# -group7-hw-Juce-Radical_Geeks
 <div id="top"></div>
 
 <!-- PROJECT SHIELDS -->
