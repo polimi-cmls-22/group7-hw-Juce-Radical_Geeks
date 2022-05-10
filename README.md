@@ -93,9 +93,9 @@ The middle section contains the frequency analyzer. It shows the frequency respo
 <img src="middle_section.jpg" alt="middlesection" width="600" height="200">
 
 The lower section is made of (from left to rigth) :
-1. a knob to control the peak gain of the filter (value in the [-24, +24] dB range);
-2. a knob to control the peak quality of the filter (value in the [0.1, 10] dB range);
-3. a knob to control the wet/dry ratio (value in the [1, 100] % range);
+1. a knob to control the peak gain of the filter (value in the [-24 dB, +24 dB] range);
+2. a knob to control the peak quality of the filter (value in the [0.1, 10] range);
+3. a knob to control the wet/dry ratio (value in the [0%, 100%] range);
 4. a button to enable the visualization of the FFT of the input in the frequency analyzer.
 <img src="lower_section.jpg" alt="lowersection" width="600" height="200">
 
