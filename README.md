@@ -9,7 +9,7 @@
 
 <br />
 <div align="center">
-  <a href="https://github.com/polimi-cmls-22/group7-HW-SC-Radical_Geeks">
+  <a href="https://github.com/polimi-cmls-22/group7-HW-Juce-Radical_Geeks">
     <img src="logo.png" alt="Logo" width="640" height="120">
   </a>
 
@@ -18,7 +18,7 @@
   <p align="center">
    AutoWahWah plugin
     <br />
-    <a href="https://github.com/polimi-cmls-22/group7-HW-SC-Radical_Geeks"><strong>Explore the docs»</strong></a>
+    <a href="https://github.com/polimi-cmls-22/group7-HW-Juce-Radical_Geeks"><strong>Explore the docs»</strong></a>
     <br />
     <br />
  
@@ -42,7 +42,7 @@
         <li><a href="#installation">Installation</a></li>
       </ul>
     </li>
-    <li><a href="#usage">Usage</a></li>
+    <li><a href="#GUI">GUI</a></li>
     <li><a href="#roadmap">Roadmap</a></li>
     <li><a href="#contact">Contact</a></li>
 
@@ -64,51 +64,39 @@ The input of the plugin is a signal (e.g. an instrument, a song, a midi instrume
 ## Getting Started
 
 ### Prerequisites
-You have to download Juce.
-### Installation
-For Mac users:
-1. Download for free Juce at [https://juce.com/get-juce]
-2. Install xCode (or another IDE)
-3. Save and open the project in the IDE through the Projucer button
-4. Built the plugin in preferred version (i.e. stand-alone, vst3, component...)
-5. Insert the newly obtnained file in your favorited daw
+You need Juce and an IDE.
+<br>If you're a Windows user, it's recommended to use the latest version of Visual Studio. If you're a Max user, it's recommended to use the latest version of xCode.
 
-For Windows users: 
+### Installation
 1. Download for free Juce at [https://juce.com/get-juce]
-2. Install Visual Studio (or another IDE)
-3. Save and open the project in the IDE through the Projucer button
-4. Built the plugin in preferred version (i.e. stand-alone, vst3, component...)
-5. Insert the newly obtnained file in your favorited daw 
+2. Clone this repo
+3. Open the project with Juce
+4. Launch your IDE from Juce
+5. Save and open the project in the IDE through the Projucer button
+6. Build the plugin as standalone, vst3 or component
+7. Use the plugin along with your favorite DAW
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
-<!-- USAGE -->
-## Usage
+<!-- GUI -->
+## GUI
 
-The user can select the sweep function with the drop-down menu.
-The user can control the gain and the quality of the peak with two knobs on the last row.
-The user can use the plugin with the signal produced by an instrument or with an audio file in input to the plugin.
+The plugin is made of three main parts: an upper section, a middle section and a lower section.
+<br>The upper section includes (from left to rigth) :
+1. a knob to control the lower limit of the sweep (value in the [0.5 Hz, 20kHz] range);
+2. a knob to control the upper limit of the sweep (value in the [0.5 Hz, 20kHz] range);
+3. a knob to control the frequency of the sweep function (value in the [0.5 Hz, 20] range);
+4. a drop-down menu to choose the sweep signal (sine wave, triangle wave, sawtooth wave, inverted sawtooth wave and rectangle wave). 
+<img src="upper_section.jpg" alt="uppersection" width="600" height="200">
 
-
-The plugin can be divided in three main parts, upper section, middle section, lower section.
-The upper section is composed by (from left to rigth) :
-1. the first knob sets the starting sweep frequency (values must be in the [0.5 Hz, 20kHz] range ). 
-2. the second knob sets the ending sweep frequency (values must be in the [0.5 Hz, 20kHz] range). 
-3. the third knob sets the velocity of the sweep function (values must be in the [0.5 Hz, 20kHz] range). 
-4. the drop-down menu where you can choose the type of signal. 
-  <img src="upper_section.jpg" alt="uppersection" width="600" height="200">
-
-
-The middle section contains the frequency analyzer.
-
+The middle section contains the frequency analyzer. It shows the frequency response of the peak filter and, if the user enables this option, also the FFT of the input (stereo).
 <img src="middle_section.jpg" alt="middlesection" width="600" height="200">
 
-The lower section is composed by (from left to rigth) :
-1. the first knob(can be chosen between -24dB and 24dB) determine whether the peak gain of the filter.
-2. the second knob (can be chosen between 0.1dB and 10dB) determine the peak quality of the filter.
-3. the third knob (can be chosen between 0% and 100%) determine the wet/dry ratio.
-4. A botton to enable the visualization of the FFT of the input 
-
+The lower section is made of (from left to rigth) :
+1. a knob to control the peak gain of the filter (value in the [-24, +24] dB range);
+2. a knob to control the peak quality of the filter (value in the [0.1, 10] dB range);
+3. a knob to control the wet/dry ratio (value in the [1, 100] % range);
+4. a button to enable the visualization of the FFT of the input in the frequency analyzer.
 <img src="lower_section.jpg" alt="lowersection" width="600" height="200">
 
 <p align="right">(<a href="#top">back to top</a>)</p>
@@ -116,13 +104,12 @@ The lower section is composed by (from left to rigth) :
 <!-- ROADMAP -->
 ## Roadmap
 
-- [✓] implement a wah-wah plugin 
-- [✓] you can use the wah-wah plugin with the waveform produced by an instrument
-- [✓] you can choose between a sinusoidal wave, a square wave or a sawtooth wave to control the filter
-- [✓] you can choose the first and the last frequency of the filter
-- [✓] you can choose the sweep velocity of the filter
-- [✓] you can choose the gain and the quality of the peak 
-- [✓] you can view the spectogram of the filter and eventually of the input signal.
+- [✓] implement a peak filter
+- [✓] let the central frequency of the peak filter change with a function
+- [✓] implement the sweep signals
+- [✓] let the user change the parameters of the peak filter (Q and gain)
+- [✓] let the user change the parameters of the sweep (limits and frequency)
+- [✓] frequency analyzer
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -134,15 +121,15 @@ Alberto Bollino - (alberto.bollino@mail.polimi.it) </p>
 Umberto Derme - (umberto.derme@mail.polimi.it) </p>
 Giorgio Granello - (giorgio.granello@mail.polimi.it) </p>
 
-Project Link: [https://github.com/polimi-cmls-22/group7-HW-SC-Radical_Geeks](https://github.com/polimi-cmls-22/group7-HW-SC-Radical_Geeks)
+Project Link: [https://github.com/polimi-cmls-22/group7-HW-Juce-Radical_Geeks](https://github.com/polimi-cmls-22/group7-HW-Juce-Radical_Geeks)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[contributors-shield]: https://img.shields.io/github/contributors/polimi-cmls-22/group7-hw-SC-Radical_Geeks.svg?style=for-the-badge
-[contributors-url]: https://github.com/polimi-cmls-22/group7-hw-SC-Radical_Geeks/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/polimi-cmls-22/group7-hw-SC-Radical_Geeks.svg?style=for-the-badge
-[forks-url]: https://github.com/polimi-cmls-22/group7-hw-SC-Radical_Geeks/network/members
-[stars-shield]: https://img.shields.io/github/stars/polimi-cmls-22/group7-hw-SC-Radical_Geeks.svg?style=for-the-badge
-[stars-url]: https://github.com/polimi-cmls-22/repo_name/stargazers
+[contributors-shield]: https://img.shields.io/github/contributors/polimi-cmls-22/group7-hw-Juce-Radical_Geeks.svg?style=for-the-badge
+[contributors-url]: https://github.com/polimi-cmls-22/group7-hw-Juce-Radical_Geeks/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/polimi-cmls-22/group7-hw-Juce-Radical_Geeks.svg?style=for-the-badge
+[forks-url]: https://github.com/polimi-cmls-22/group7-hw-Juce-Radical_Geeks/network/members
+[stars-shield]: https://img.shields.io/github/stars/polimi-cmls-22/group7-hw-Juce-Radical_Geeks.svg?style=for-the-badge
+[stars-url]: https://github.com/polimi-cmls-22/group7-hw-Juce-Radical_Geeks/stargazers
