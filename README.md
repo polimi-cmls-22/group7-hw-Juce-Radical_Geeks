@@ -87,9 +87,11 @@ The plugin is made of three main parts: an upper section, a middle section and a
 2. a knob to control the upper limit of the sweep (value in the [0.5 Hz, 20kHz] range);
 3. a knob to control the frequency of the sweep function (value in the [0.5 Hz, 20] range);
 4. a drop-down menu to choose the sweep signal (sine wave, triangle wave, sawtooth wave, inverted sawtooth wave and rectangle wave). 
+
 <br><img src="upper_section.jpg" alt="uppersection" width="600" height="200">
 
 The middle section contains the frequency analyzer. It shows the frequency response of the peak filter and, if the user enables this option, also the FFT of the input (stereo).
+
 <br><img src="middle_section.jpg" alt="middlesection" width="600" height="200">
 
 The lower section is made of (from left to rigth) :
@@ -97,6 +99,7 @@ The lower section is made of (from left to rigth) :
 2. a knob to control the peak quality of the filter (value in the [0.1, 10] range);
 3. a knob to control the wet/dry ratio (value in the [0%, 100%] range);
 4. a button to enable the visualization of the FFT of the input in the frequency analyzer.
+
 <br><img src="lower_section.jpg" alt="lowersection" width="600" height="200">
 
 <p align="right">(<a href="#top">back to top</a>)</p>
